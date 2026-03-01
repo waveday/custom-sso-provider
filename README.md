@@ -180,7 +180,6 @@ curl -s http://accounts.local:8000/userinfo \
   -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
-
 ## VPS deployment (aaPanel)
 
 See detailed guide: [`docs/DEPLOY_AAPANEL.md`](docs/DEPLOY_AAPANEL.md).
