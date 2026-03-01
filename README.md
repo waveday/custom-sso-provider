@@ -180,6 +180,10 @@ curl -s http://accounts.local:8000/userinfo \
   -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+## VPS deployment (aaPanel)
+
+See detailed guide: [`docs/DEPLOY_AAPANEL.md`](docs/DEPLOY_AAPANEL.md).
+
 ## Rate limiting and production hardening
 
 This project includes app-level login/token controls and strong password hashing (`bcrypt`).
