@@ -1,0 +1,10 @@
+<!doctype html>
+<html>
+<head><title>Consent</title></head>
+<body>
+  <h1>Authorize {{ client_name }}</h1>
+  <p>This app requests scope: {{ scope }}</p>
+  <form method="post" action="/authorize/approve"><button type="submit">Allow</button></form>
+  <form method="post" action="/authorize/deny"><button type="submit">Deny</button></form>
+</body>
+</html>
