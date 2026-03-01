@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -8,4 +9,4 @@ class UserInfo(BaseModel):
     name: str
     given_name: str
     family_name: str
-    picture: str | None = None
+    picture: Optional[str] = None

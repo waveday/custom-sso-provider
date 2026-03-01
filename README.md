@@ -20,6 +20,11 @@ All OIDC URLs are absolute and derived from `ISSUER`:
 
 `iss` in issued ID and access tokens is exactly `ISSUER`.
 
+## Requirements
+
+- Python 3.9+
+- PostgreSQL 16+ (or compatible)
+
 ## Stack
 
 - FastAPI
@@ -179,6 +184,7 @@ curl -s -X POST http://accounts.local:8000/token \
 curl -s http://accounts.local:8000/userinfo \
   -H "Authorization: Bearer ACCESS_TOKEN"
 ```
+
 
 ## VPS deployment (aaPanel)
 
