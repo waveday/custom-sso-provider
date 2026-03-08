@@ -74,7 +74,9 @@ All OIDC URLs are absolute and derived from `ISSUER`:
    ```bash
    pip install -e .[dev]
    alembic upgrade head
+   python -m alembic upgrade head
    uvicorn app.main:app --host 0.0.0.0 --port 8000
+   python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
    ```
 
 ## Proxy headers
@@ -105,11 +107,16 @@ Create a user:
 
 ```bash
 python -m app.cli create-user \
-  --email user@example.com \
-  --password pass123 \
-  --name "Test User" \
+  --email me@muathye.com \
+  --password 123456789 \
+  --name "Muath User" \
   --given-name Test \
-  --family-name User
+  --family-name Family
+```
+
+or 
+```powershell
+python -m app.cli create-user "me@muathye.com" "123456789" "Muath User" "Test" "Family"
 ```
 
 Create confidential client (Laravel-style):
@@ -120,6 +127,11 @@ python -m app.cli create-client \
   --redirect-uri http://localhost:9000/callback
 ```
 
+or
+```powershell
+python -m app.cli create-client "Laravel App" --redirect-uri "http://localhost:9000/callback"
+```
+
 Create public client (Flutter-style):
 
 ```bash
@@ -127,6 +139,12 @@ python -m app.cli create-client \
   --client-name "Flutter App" \
   --public \
   --redirect-uri com.example.app:/oauth/callback
+```
+
+or
+```powershell
+python -m app.cli create-client "Flutter App" --public --redirect-uri com.example.app:/oauth/callback
+python -m app.cli create-client "Flutter Aytamna App" --public --redirect-uri sa.app.aytamna://auth/callback
 ```
 
 ## Google-like curl examples
