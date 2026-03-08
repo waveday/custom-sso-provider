@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -16,7 +17,7 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(255))
     given_name: Mapped[str] = mapped_column(String(255))
     family_name: Mapped[str] = mapped_column(String(255))
-    picture: Mapped[str | None] = mapped_column(String(1024), nullable=True)
+    picture: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
     password_hash: Mapped[str] = mapped_column(String(255))
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
@@ -26,7 +27,7 @@ class OAuthClient(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     client_id: Mapped[str] = mapped_column(String(128), unique=True, index=True)
-    client_secret_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    client_secret_hash: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     client_name: Mapped[str] = mapped_column(String(255))
     redirect_uris: Mapped[str] = mapped_column(Text)
     is_confidential: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -46,9 +47,9 @@ class AuthCode(Base):
     code_challenge: Mapped[str] = mapped_column(String(255))
     code_challenge_method: Mapped[str] = mapped_column(String(16), default="S256")
     nonce: Mapped[str] = mapped_column(String(255))
-    state: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    state: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime)
-    consumed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    consumed_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     client: Mapped[OAuthClient] = relationship()

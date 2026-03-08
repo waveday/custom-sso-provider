@@ -2,7 +2,8 @@ import json
 import base64
 import hashlib
 import secrets
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from typing import Optional
 
 from jose import jwt
 from passlib.context import CryptContext
@@ -25,14 +26,14 @@ def hash_client_secret(secret: str) -> str:
     return pwd_context.hash(secret)
 
 
-def verify_client_secret(secret: str, secret_hash: str | None) -> bool:
+def verify_client_secret(secret: str, secret_hash: Optional[str]) -> bool:
     if not secret_hash:
         return False
     return pwd_context.verify(secret, secret_hash)
 
 
 def now_utc() -> datetime:
-    return datetime.now(UTC).replace(tzinfo=None)
+    return datetime.now(timezone.utc).replace(tzinfo=None)
 
 
 def make_auth_code() -> str:
@@ -51,7 +52,7 @@ def verify_pkce_s256(verifier: str, challenge: str) -> bool:
 
 def sign_jwt(claims: dict, key: SigningKey, ttl_seconds: int) -> str:
     settings = get_settings()
-    iat = int(datetime.now(UTC).timestamp())
+    iat = int(datetime.now(timezone.utc).timestamp())
     payload = {
         "iss": str(settings.issuer).rstrip("/"),
         "iat": iat,

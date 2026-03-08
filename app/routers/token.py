@@ -1,6 +1,7 @@
 import json
 import base64
 from datetime import datetime, timedelta
+from typing import Optional, Tuple
 
 from fastapi import APIRouter, Depends, Form, Header, HTTPException
 from jose import jwt
@@ -16,7 +17,7 @@ from app.security import now_utc, verify_client_secret, verify_pkce_s256
 router = APIRouter()
 
 
-def _parse_basic_auth(header: str | None) -> tuple[str, str] | None:
+def _parse_basic_auth(header: Optional[str]) -> Optional[Tuple[str, str]]:
     if not header or not header.lower().startswith("basic "):
         return None
     decoded = base64.b64decode(header.split(" ", 1)[1]).decode("utf-8")
@@ -29,9 +30,9 @@ def token(
     grant_type: str = Form(...),
     code: str = Form(...),
     redirect_uri: str = Form(...),
-    client_id: str | None = Form(None),
+    client_id: Optional[str] = Form(None),
     code_verifier: str = Form(...),
-    authorization: str | None = Header(default=None),
+    authorization: Optional[str] = Header(default=None),
     db: Session = Depends(get_db),
 ):
     if grant_type != "authorization_code":
@@ -81,7 +82,7 @@ def token(
 
 
 @router.get("/userinfo", response_model=UserInfo)
-def userinfo(authorization: str | None = Header(default=None), db: Session = Depends(get_db)):
+def userinfo(authorization: Optional[str] = Header(default=None), db: Session = Depends(get_db)):
     if not authorization or not authorization.lower().startswith("bearer "):
         raise HTTPException(status_code=401, detail={"error": "invalid_token"})
     token = authorization.split(" ", 1)[1]

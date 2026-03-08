@@ -1,4 +1,5 @@
 from urllib.parse import urlencode
+from typing import Optional
 
 from fastapi import APIRouter, Depends, Form, HTTPException, Query, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -53,7 +54,7 @@ def authorize(
     redirect_uri: str = Query(...),
     response_type: str = Query(...),
     scope: str = Query("openid profile email"),
-    state: str | None = Query(None),
+    state: Optional[str] = Query(None),
     nonce: str = Query(...),
     code_challenge: str = Query(...),
     code_challenge_method: str = Query(...),
